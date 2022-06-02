@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use board_plugin::resources::BoardOptions;
 use board_plugin::BoardPlugin;
 
 #[cfg(feature = "debug")]
@@ -14,13 +15,21 @@ fn main() {
         ..Default::default()
     })
     // Bevy default plugins
-    .add_plugins(DefaultPlugins)
-    .add_plugin(BoardPlugin);
+    .add_plugins(DefaultPlugins);
+    // Board plugin options
+    app.insert_resource(BoardOptions {
+        map_size: (20, 20),
+        bomb_count: 40,
+        tile_padding: 3.0,
+        ..Default::default()
+    });
+
     #[cfg(feature = "debug")]
     // Debug hierarchy inspector
-    app.add_plugin(WorldInspectorPlugin::new());
-    // Startup system (cameras)
-    app.add_startup_system(camera_setup);
+    app.add_plugin(WorldInspectorPlugin::new())
+        .add_plugin(BoardPlugin)
+        // Startup system (cameras)
+        .add_startup_system(camera_setup);
     // Run the app
     app.run();
 }

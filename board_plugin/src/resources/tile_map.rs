@@ -1,8 +1,8 @@
 // tile_map.rs
-use std::ops::{Deref, DerefMut};
-use rand::{thread_rng, Rng};
 use crate::components::Coordinates;
 use crate::resources::tile::Tile;
+use rand::{thread_rng, Rng};
+use std::ops::{Deref, DerefMut};
 
 /// Base tile map
 #[derive(Debug, Clone)]
@@ -118,7 +118,6 @@ impl TileMap {
             }
         }
     }
-
 }
 
 impl Deref for TileMap {
@@ -134,8 +133,6 @@ impl DerefMut for TileMap {
         &mut self.map
     }
 }
-
-
 
 /// Delta coordinates for all 8 square neighbors
 const SQUARE_COORDINATES: [(i8, i8); 8] = [
@@ -156,5 +153,3 @@ const SQUARE_COORDINATES: [(i8, i8); 8] = [
     // Top right
     (1, 1),
 ];
-
-

@@ -1,8 +1,7 @@
 // coordinates.rs
+use bevy::ecs::component::Component;
 use std::fmt::{self, Display, Formatter};
 use std::ops::{Add, Sub};
-use bevy::ecs::component::Component;
-
 
 #[cfg_attr(feature = "debug", derive(bevy_inspector_egui::Inspectable))]
 #[derive(Debug, Default, Copy, Clone, Ord, PartialOrd, Eq, PartialEq, Hash, Component)]
