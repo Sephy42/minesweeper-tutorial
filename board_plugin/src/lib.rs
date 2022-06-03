@@ -1,12 +1,16 @@
 // lib.rs
+mod bounds;
 pub mod components;
 pub mod resources;
+mod systems;
 
+use crate::bounds::Bounds2;
 use crate::components::*;
 use crate::resources::tile::Tile;
 use crate::resources::tile_map::TileMap;
-use crate::resources::{BoardOptions, BoardPosition, TileSize};
+use crate::resources::{Board, BoardOptions, BoardPosition, TileSize};
 use bevy::log;
+use bevy::math::Vec3Swizzles;
 use bevy::prelude::*;
 use bevy_inspector_egui::RegisterInspectable;
 
@@ -15,6 +19,7 @@ pub struct BoardPlugin;
 impl Plugin for BoardPlugin {
     fn build(&self, app: &mut App) {
         app.add_startup_system(Self::create_board);
+        app.add_system(systems::input::input_handling);
         log::info!("Loaded Board Plugin");
         #[cfg(feature = "debug")]
         {
@@ -101,6 +106,16 @@ impl BoardPlugin {
                     font,
                 );
             });
+        // We add the main resource of the game, the board
+        commands.insert_resource(Board {
+            tile_map,
+            bounds: Bounds2 {
+                position: board_position.xy(),
+                size: board_size,
+            },
+            tile_size,
+        });
+        //
     }
 
     /// Computes a tile size that matches the window according to the tile map size
