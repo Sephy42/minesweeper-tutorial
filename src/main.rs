@@ -15,7 +15,7 @@ pub enum AppState {
 }
 
 fn main() {
-    env::set_var("RUST_BACKTRACE", "1");
+    //  env::set_var("RUST_BACKTRACE", "1");
     let mut app = App::new();
     // Window setup
     app.insert_resource(WindowDescriptor {
@@ -61,6 +61,10 @@ fn state_handler(mut state: ResMut<State<AppState>>, keys: Res<Input<KeyCode>>) 
         log::debug!("loading detected");
         if state.current() == &AppState::Out {
             log::info!("loading game");
+            state.set(AppState::InGame).unwrap();
+        } else {
+            log::info!("reloading game");
+            state.set(AppState::Out).unwrap();
             state.set(AppState::InGame).unwrap();
         }
     }
