@@ -41,6 +41,12 @@ impl<T: StateData> Plugin for BoardPlugin<T> {
         .add_system_set(
             SystemSet::on_exit(self.running_state.clone()).with_system(Self::cleanup_board),
         )
+        .add_system_set(
+            SystemSet::on_pause(self.running_state.clone())
+        )
+            .add_system_set(
+                SystemSet::on_resume(self.running_state.clone())
+            )
         .add_event::<TileTriggerEvent>();
         log::info!("Loaded Board Plugin");
         #[cfg(feature = "debug")]

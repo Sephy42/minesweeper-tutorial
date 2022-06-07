@@ -11,6 +11,7 @@ use bevy_inspector_egui::WorldInspectorPlugin;
 pub enum AppState {
     InGame,
     Out,
+    InPause,
 }
 
 fn main() {
@@ -61,6 +62,16 @@ fn state_handler(mut state: ResMut<State<AppState>>, keys: Res<Input<KeyCode>>) 
         if state.current() == &AppState::Out {
             log::info!("loading game");
             state.set(AppState::InGame).unwrap();
+        }
+    }
+    if keys.just_pressed(KeyCode::Escape) {
+        log::debug!("pauses detected");
+        if state.current() == &AppState::InPause {
+            log::info!("resuming game");
+            state.set(AppState::InGame).unwrap();
+        } else if state.current() == &AppState::InGame {
+            log::info!("pausing game");
+            state.set(AppState::InPause).unwrap();
         }
     }
 }
