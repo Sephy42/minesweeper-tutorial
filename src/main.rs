@@ -25,7 +25,7 @@ fn main() {
         ..Default::default()
     })
     // Board plugin options
-        .add_startup_system(setup_board)
+    .add_startup_system(setup_board)
     .add_state(AppState::Out)
     .add_plugin(BoardPlugin {
         running_state: AppState::InGame,
@@ -78,7 +78,6 @@ fn camera_setup(mut commands: Commands) {
     // 2D orthographic camera
     commands.spawn_bundle(OrthographicCameraBundle::new_2d());
 }
-
 
 fn setup_board(
     mut commands: Commands,
